@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cinépolis</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background-color: #f8f9fa;
+      }
+      .navbar-brand img {
+        height: 40px;
+      }
+      .card {
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-dark bg-dark mb-4">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <img
+            src="{{ url_for('static', filename='shared/Logo-Cinepolis.png') }}"
+            alt="Cinépolis Logo"
+            class="d-inline-block align-text-top"
+          />
+        </a>
+      </div>
+    </nav>
+
+    <div class="container">
+      <form
+        action="/procesarBoleto"
+        method="post"
+        class="needs-validation"
+        novalidate
+      >
+        <!-- Entrada -->
+        <div class="card mb-4">
+          <div class="card-header bg-primary text-white">
+            <h5 class="card-title mb-0">Entrada</h5>
+          </div>
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="nombre" class="form-label">Nombre</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="nombre"
+                  name="nombre"
+                  required
+                />
+              </div>
+              <div class="col-md-6">
+                <label for="cantidad_compradores" class="form-label"
+                  >Cantidad de compradores</label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  id="cantidad_compradores"
+                  name="cantidad_compradores"
+                  required
+                  min="1"
+                />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label">Tarjeta Cineco</label>
+                <div class="d-flex gap-3">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="tarjeta"
+                      id="tarjetaSi"
+                      value="si"
+                    />
+                    <label class="form-check-label" for="tarjetaSi">Sí</label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="tarjeta"
+                      id="tarjetaNo"
+                      value="no"
+                    />
+                    <label class="form-check-label" for="tarjetaNo">No</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label for="cantidad_boletos" class="form-label"
+                  >Cantidad de Boletos</label
+                >
+                <input
+                  type="number"
+                  class="form-control"
+                  id="cantidad_boletos"
+                  name="cantidad_boletos"
+                  required
+                  min="1"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Salida -->
+        <div class="card mb-4">
+          <div class="card-header bg-success text-white">
+            <h5 class="card-title mb-0">Salida</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-12">
+                <label for="valor" class="form-label">Valor a Pagar</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="valor"
+                  name="valor"
+                  value="{{mensaje}}"
+                  readonly
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Acciones -->
+        <div class="card">
+          <div class="card-header bg-secondary text-white">
+            <h5 class="card-title mb-0">Acciones</h5>
+          </div>
+          <div class="card-body">
+            <button type="submit" class="btn btn-primary">
+              <i class="bi bi-check-circle-fill me-2"></i>
+              Procesar
+            </button>
+            <button type="reset" class="btn btn-secondary ms-2">
+              <i class="bi bi-x-circle-fill me-2"></i>
+              Limpiar
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+      // Validación de formulario
+      (function () {
+        "use strict";
+        var forms = document.querySelectorAll(".needs-validation");
+        Array.prototype.slice.call(forms).forEach(function (form) {
+          form.addEventListener(
+            "submit",
+            function (event) {
+              if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+              form.classList.add("was-validated");
+            },
+            false
+          );
+        });
+      })();
+    </script>
+  </body>
+</html>
